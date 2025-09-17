@@ -1,0 +1,8 @@
+include::onecx-hello-world-bff-attributes.adoc[opts=optional]
+
+== onecx-hello-world-bff
+
+include::docs.adoc[opts=optional]
+
+
+include::onecx-hello-world-bff-docs.adoc[opts=optional]

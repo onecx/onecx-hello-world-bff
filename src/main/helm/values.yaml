@@ -1,0 +1,26 @@
+app:
+ name: bff
+ template:
+  oidc_client_id: "ONECX_OIDC_CLIENT_CLIENT_ID"
+ image:
+  repository: "onecx/onecx-hello-world-bff"
+ operator:
+  # Permission
+  permission:
+   enabled: true
+   spec:
+    permissions:
+     hello:
+      read: permission on all GET requests and POST search
+      write: permission on PUT, POST, PATCH requests, where objects are saved or updated
+      delete: permission on all DELETE requests
+  keycloak:
+   client:
+    enabled: true
+    spec:
+     kcConfig:
+      defaultClientScopes: [ ocx-hw:all, ocx-pm:read ]
+  microservice:
+   spec:
+    description: OneCX Hello World Backend For Frontend
+    name: OneCX Hello World BFF

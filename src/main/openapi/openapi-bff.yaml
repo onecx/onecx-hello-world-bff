@@ -1,0 +1,274 @@
+---
+openapi: 3.0.3
+info:
+ title: hello-world-bff
+ description: Backend-For-Frontend (BFF) service for hello-world. This API provides endpoints to manage hello-world.
+ version: 1.0.0
+servers:
+ - url: http://hello-world-bff:8080
+paths:
+ /hello/search:
+  post:
+   x-onecx:
+    permissions:
+     hello:
+      - read
+   operationId: searchHellos
+   tags:
+    - helloBffService
+   description: This operation performs a search based on provided search criteria. Search for hello results.
+   requestBody:
+    content:
+     application/json:
+      schema:
+       $ref: '#/components/schemas/SearchHelloRequest'
+   responses:
+    '200':
+     description: OK
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/SearchHelloResponse'
+    '400':
+     description: Bad request
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/ProblemDetailResponse'
+ /hello/{id}:
+  get:
+   x-onecx:
+    permissions:
+     hello:
+      - read
+   operationId: getHelloById
+   tags:
+    - helloBffService
+   parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+       type: string
+   responses:
+    '200':
+     description: OK
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/GetHelloByIdResponse'
+    '404':
+     description: Not Found
+  put:
+   x-onecx:
+    permissions:
+     hello:
+      - write
+   operationId: updateHello
+   tags:
+    - helloBffService
+   description: This operation performs an update.
+   parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+       type: string
+   requestBody:
+    required: true
+    content:
+     application/json:
+      schema:
+       $ref: '#/components/schemas/UpdateHelloRequest'
+   responses:
+    '200':
+     description: Hello updated
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/UpdateHelloResponse'
+    '400':
+     description: Bad request
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/ProblemDetailResponse'
+    '404':
+     description: Hello not found
+  delete:
+   x-onecx:
+    permissions:
+     hello:
+      - delete
+   tags:
+    - helloBffService
+   operationId: deleteHello
+   description: Delete Hello by id
+   parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+       type: string
+   responses:
+    '204':
+     description: Hello deleted
+ /hello:
+  post:
+   x-onecx:
+    permissions:
+     hello:
+      - write
+   operationId: createHello
+   tags:
+    - helloBffService
+   description: This operation performs a create.
+   requestBody:
+    required: true
+    content:
+     application/json:
+      schema:
+       $ref: '#/components/schemas/CreateHelloRequest'
+   responses:
+    '201':
+     description: New Hello created
+     headers:
+      Location:
+       required: true
+       schema:
+        type: string
+        format: url
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/CreateHelloResponse'
+    '400':
+     description: Bad request
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/ProblemDetailResponse'
+tags:
+ - name: helloBffService
+   description: helloBffService related endpoints
+components:
+ schemas:
+  Hello:
+   type: object
+   required:
+    - name
+   properties:
+    modificationCount:
+     type: integer
+     format: int32
+    id:
+     type: string
+    name:
+     type: string
+  SearchHelloRequest:
+   type: object
+   properties:
+    id:
+     type: string
+    pageNumber:
+     type: integer
+     format: int32
+     default: 0
+     description: The number of the page
+    pageSize:
+     type: integer
+     format: int32
+     default: 100
+     maximum: 1000
+     description: The size of the page.
+    name:
+     type: string
+  SearchHelloResponse:
+   type: object
+   required:
+    - stream
+    - size
+    - number
+    - totalPages
+    - totalElements
+   properties:
+    stream:
+     type: array
+     items:
+      $ref: '#/components/schemas/Hello'
+    size:
+     type: integer
+     format: int32
+     description: Current page size.
+    number:
+     type: integer
+     format: int32
+     description: Current page number.
+    totalElements:
+     type: integer
+     format: int64
+     description: Total number of results on the server.
+    totalPages:
+     type: integer
+     format: int64
+     description: Total pages.
+  UpdateHelloRequest:
+   type: object
+   properties:
+    resource:
+     type: object
+     $ref: '#/components/schemas/Hello'
+  UpdateHelloResponse:
+   type: object
+   properties:
+    resource:
+     type: object
+     $ref: '#/components/schemas/Hello'
+  ProblemDetailResponse:
+   type: object
+   properties:
+    errorCode:
+     type: string
+    detail:
+     type: string
+    params:
+     type: array
+     items:
+      $ref: '#/components/schemas/ProblemDetailParam'
+    invalidParams:
+     type: array
+     items:
+      $ref: '#/components/schemas/ProblemDetailInvalidParam'
+  ProblemDetailParam:
+   type: object
+   properties:
+    key:
+     type: string
+    value:
+     type: string
+  ProblemDetailInvalidParam:
+   type: object
+   properties:
+    name:
+     type: string
+    message:
+     type: string
+  GetHelloByIdResponse:
+   type: object
+   required:
+    - resource
+   properties:
+    resource:
+     $ref: '#/components/schemas/Hello'
+  CreateHelloRequest:
+   type: object
+   properties:
+    resource:
+     type: object
+     $ref: '#/components/schemas/Hello'
+  CreateHelloResponse:
+   type: object
+   properties:
+    resource:
+     type: object
+     $ref: '#/components/schemas/Hello'
