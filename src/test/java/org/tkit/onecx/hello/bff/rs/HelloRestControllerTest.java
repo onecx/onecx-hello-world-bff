@@ -358,36 +358,4 @@ class HelloRestControllerTest extends AbstractTest {
                 .statusCode(Response.Status.NOT_FOUND.getStatusCode());
         Assertions.assertNotNull(output);
     }
-    //
-    //    @Test
-    //    void serverConstraintTest() {
-    //        ProblemDetailResponse problemDetailResponse = new ProblemDetailResponse();
-    //        problemDetailResponse.setErrorCode("400");
-    //        CreateHello createHello = new CreateHello();
-    //        // create mock rest endpoint
-    //        mockServerClient.when(request().withPath("/internal/hellos").withMethod(HttpMethod.POST)
-    //                .withBody(JsonBody.json(createHello)))
-    //                .withId(MOCK_ID)
-    //                .respond(httpRequest -> response().withStatusCode(Response.Status.BAD_REQUEST.getStatusCode())
-    //                        .withContentType(MediaType.APPLICATION_JSON)
-    //                        .withBody(JsonBody.json(problemDetailResponse)));
-    //
-    //        CreateHelloRequestDTO createHelloRequestDTO = new CreateHelloRequestDTO();
-    //        HelloUpdateCreateDTO helloUpdateCreateDTO = new HelloUpdateCreateDTO();
-    //        createHelloRequestDTO.setResource(helloUpdateCreateDTO);
-    //
-    //        var output = given()
-    //                .when()
-    //                .auth().oauth2(keycloakClient.getAccessToken(ADMIN))
-    //                .header(APM_HEADER_PARAM, ADMIN)
-    //                .contentType(APPLICATION_JSON)
-    //                .body(createHelloRequestDTO)
-    //                .post()
-    //                .then()
-    //                .statusCode(Response.Status.BAD_REQUEST.getStatusCode())
-    //                .contentType(APPLICATION_JSON)
-    //                .extract().as(ProblemDetailResponseDTO.class);
-    //
-    //        Assertions.assertNotNull(output);
-    //    }
 }
