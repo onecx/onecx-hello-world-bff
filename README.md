@@ -1,2 +1,2 @@
 # onecx-hello-world-bff
-OneCx Hello World BFF
+OneCX Hello World BFF
