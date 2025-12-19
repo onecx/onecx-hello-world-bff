@@ -22,7 +22,7 @@ quarkus.openapi-generator.codegen.spec.onecx_hello_world_svc_yaml.return-respons
 quarkus.openapi-generator.codegen.spec.onecx_hello_world_svc_yaml.additional-api-type-annotations=@org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 quarkus.openapi-generator.codegen.spec.onecx_hello_world_svc_yaml.additional-model-type-annotations=@io.quarkus.runtime.annotations.RegisterForReflection;
 quarkus.openapi-generator.codegen.spec.onecx_hello_world_svc_yaml.enable-security-generation=false
-%prod.quarkus.oidc-client.client-id=${ONECX_OIDC_CLIENT_CLIENT_ID:${quarkus.application.name}}
+%prod.quarkus.oidc-client.client-id=${quarkus.application.name}
 %prod.quarkus.rest-client.onecx_hello_world_svc.providers=io.quarkus.oidc.client.reactive.filter.OidcClientRequestReactiveFilter
 ----
 ====
@@ -47,8 +47,6 @@ Default values
 ----
 app:
  name: bff
- template:
-  oidc_client_id: "ONECX_OIDC_CLIENT_CLIENT_ID"
  image:
   repository: "onecx/onecx-hello-world-bff"
  operator:
@@ -70,6 +68,10 @@ app:
   microservice:
    spec:
     description: OneCX Hello World Backend For Frontend
+    name: OneCX Hello World BFF
+----
+
+description: OneCX Hello World Backend For Frontend
     name: OneCX Hello World BFF
 ----
 
