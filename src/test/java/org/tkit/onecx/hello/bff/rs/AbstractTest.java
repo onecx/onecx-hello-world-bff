@@ -31,4 +31,7 @@ public abstract class AbstractTest {
                             return objectMapper;
                         }));
     }
+
+    protected AbstractTest() {
+    }
 }
